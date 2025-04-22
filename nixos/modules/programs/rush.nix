@@ -83,7 +83,6 @@ in
         programs.rush.shell = if cfg.wrap then config.security.wrapperDir + "/rush" else cfg.package;
 
         environment = {
-          shells = [ cfg.shell ];
           systemPackages = [ cfg.package ];
 
           etc."rush.rc".text =
@@ -102,6 +101,11 @@ in
                 (builtins.concatStringsSep "\n\n")
                 (lib.mkDefault)
               ];
+
+          shells = [
+            "/run/current-system/sw${cfg.package.shellPath}"
+            cfg.shell
+          ];
         };
       }
     ]
